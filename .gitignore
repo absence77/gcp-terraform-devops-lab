@@ -8,3 +8,5 @@ __pycache__/
 *.json
 *key.json
 *.b64
+gcp-creds.b64
+
