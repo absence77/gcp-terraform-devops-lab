@@ -5,5 +5,5 @@ __pycache__/
 *.pyc
 .vscode/
 .idea/
-.gcp-key.json
-gcp-key.json
+*.json
+*key.json
