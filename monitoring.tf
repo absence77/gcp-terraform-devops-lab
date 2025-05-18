@@ -12,7 +12,7 @@ resource "google_monitoring_notification_channel" "email_channel" {
 resource "google_monitoring_alert_policy" "high_cpu_alert" {
   display_name          = "High CPU Alert"
   notification_channels = [google_monitoring_notification_channel.email_channel.id]
-  combiner              = "AND"  // Combine conditions using AND operator
+  combiner              = "AND" // Combine conditions using AND operator
 
   conditions {
     display_name = "High CPU Utilization"
@@ -21,7 +21,7 @@ resource "google_monitoring_alert_policy" "high_cpu_alert" {
       threshold_value = 80
       duration        = "60s"
       // NOTE: The metric below is currently for disk write bytes, should be changed to CPU utilization if desired
-      filter          = "resource.type=\"gce_instance\" AND metric.type=\"compute.googleapis.com/instance/disk/write_bytes_count\""
+      filter = "resource.type=\"gce_instance\" AND metric.type=\"compute.googleapis.com/instance/disk/write_bytes_count\""
 
       aggregations {
         alignment_period   = "60s"
