@@ -1,0 +1,8 @@
+*.tfstate
+*.tfstate.backup
+.terraform/
+__pycache__/
+*.pyc
+.vscode/
+.idea/
+
