@@ -1,14 +1,23 @@
-name: Terraform GCP Plan
+name: Terraform GCP
 
 on:
   push:
     branches:
       - master
   pull_request:
+  workflow_dispatch:
+    inputs:
+      action:
+        description: 'Terraform action to run'
+        required: true
+        default: 'plan'
+        type: choice
+        options:
+          - plan
+          - apply
 
 jobs:
   terraform:
-    name: Terraform Plan
     runs-on: ubuntu-latest
 
     steps:
@@ -25,10 +34,14 @@ jobs:
           echo "${{ secrets.GCP_CREDENTIALS_BASE64 }}" | base64 -d > $HOME/gcp-key.json
           echo "GOOGLE_APPLICATION_CREDENTIALS=$HOME/gcp-key.json" >> $GITHUB_ENV
 
-
       - name: Terraform Init
         run: terraform init
 
       - name: Terraform Plan
+        if: ${{ github.event.inputs.action == 'plan' || github.event_name != 'workflow_dispatch' }}
         run: terraform plan -var-file="terraform.tfvars"
+
+      - name: Terraform Apply
+        if: ${{ github.event.inputs.action == 'apply' }}
+        run: terraform apply -var-file="terraform.tfvars" -auto-approve
 
