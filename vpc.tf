@@ -1,6 +1,6 @@
 provider "google" {
-  project = "terrafom-test-lab" # Choose our project
-  region  = "us-east1"          # choose our region
+  project = var.project_id
+  region  = var.region
 }
 
 resource "google_compute_network" "vpc_network" {
@@ -10,21 +10,20 @@ resource "google_compute_network" "vpc_network" {
 
 resource "google_compute_subnetwork" "subnet" {
   name          = "my-subnet"
-  region        = "us-east1"
+  region        = var.region
   network       = google_compute_network.vpc_network.id
   ip_cidr_range = "10.0.0.0/24"
 }
 
-# Правило фаервола для SSH
 resource "google_compute_firewall" "allow_ssh" {
   name    = "allow-ssh"
-  network = google_compute_network.vpc_network.id # set our network
+  network = google_compute_network.vpc_network.id
 
   allow {
     protocol = "tcp"
-    ports    = ["22"] # aprove port 22
+    ports    = ["22"]
   }
 
-  source_ranges = ["0.0.0.0/0"] # income to connect from all ip adresses
+  source_ranges = ["0.0.0.0/0"]
 }
 
