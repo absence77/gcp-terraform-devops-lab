@@ -2,7 +2,7 @@
 resource "google_compute_instance" "vm_instance" {
   name         = "my-vm-instance"
   machine_type = "e2-medium"  // Instance machine type
-  zone         = "us-east1-b" // Deployment zone
+  zone         = "us-central1-a" // Deployment zone
 
   // Boot disk initialized with Ubuntu 20.04 LTS image
   boot_disk {
