@@ -22,8 +22,9 @@ jobs:
 
       - name: Create credentials file from secret
         run: |
-          echo "${{ secrets.GCP_SERVICE_ACCOUNT_KEY }}" > $HOME/gcp-key.json
+          echo "${{ secrets.GCP_CREDENTIALS_BASE64 }}" | base64 -d > $HOME/gcp-key.json
           echo "GOOGLE_APPLICATION_CREDENTIALS=$HOME/gcp-key.json" >> $GITHUB_ENV
+
 
       - name: Terraform Init
         run: terraform init
